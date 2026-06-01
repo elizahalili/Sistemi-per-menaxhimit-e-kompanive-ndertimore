@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using MySqlConnector;
 using FluentValidation;
 using backend.Configuration;
 using backend.Data;
@@ -25,10 +25,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Configure DB Context with MySQL
+// Configure DB Context with MySQL.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+{
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+    }
+
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 // Configure ASP.NET Identity with int keys
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -80,7 +87,7 @@ builder.Services.AddCors(options =>
 });
 
 // Register AutoMapper
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfile>());
 
 // Register FluentValidation Validators
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>();
@@ -92,44 +99,9 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMaterialUsageService, MaterialUsageService>();
 
-// Swagger configurations
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hekur & Dekor Construction API", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment() || true) // always enable Swagger for easy grading/presentations!
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hekur & Dekor API v1"));
-}
-
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors("AllowAll");
@@ -139,14 +111,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Auto-run DB Migrations and Seeding at startup!
+// Create the database schema and seed demo data at startup.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
+        await EnsureMySqlDatabaseExistsAsync(connectionString!);
+
         var dbContext = services.GetRequiredService<ApplicationDbContext>();
-        await dbContext.Database.MigrateAsync();
+        await dbContext.Database.EnsureCreatedAsync();
         
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
@@ -160,3 +134,23 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+static async System.Threading.Tasks.Task EnsureMySqlDatabaseExistsAsync(string connectionString)
+{
+    var builder = new MySqlConnectionStringBuilder(connectionString);
+    var databaseName = builder.Database;
+
+    if (string.IsNullOrWhiteSpace(databaseName))
+    {
+        throw new InvalidOperationException("The MySQL connection string must include a database name.");
+    }
+
+    builder.Database = string.Empty;
+
+    await using var connection = new MySqlConnection(builder.ConnectionString);
+    await connection.OpenAsync();
+
+    await using var command = connection.CreateCommand();
+    command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+    await command.ExecuteNonQueryAsync();
+}

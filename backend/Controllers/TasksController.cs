@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using backend.DTOs;
 using backend.Entities;
 using backend.Repositories;
+using TaskEntity = backend.Entities.Task;
 
 namespace backend.Controllers
 {
@@ -28,7 +29,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<TaskDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.Tasks.GetQueryable().Include(t => t.ProjectPhase);
+            IQueryable<TaskEntity> queryable = _unitOfWork.Tasks.GetQueryable().Include(t => t.ProjectPhase);
 
             // Filter by FazaId
             if (query.FazaId.HasValue)
@@ -96,7 +97,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<TaskDto>> Create([FromBody] TaskCreateUpdateDto dto)
         {
-            var task = _mapper.Map<Task>(dto);
+            var task = _mapper.Map<TaskEntity>(dto);
             await _unitOfWork.Tasks.AddAsync(task);
             await _unitOfWork.CompleteAsync();
 

@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using backend.Entities;
 
 namespace backend.Repositories
@@ -10,7 +9,7 @@ namespace backend.Repositories
         IGenericRepository<Project> Projects { get; }
         IGenericRepository<Worker> Workers { get; }
         IGenericRepository<ProjectPhase> ProjectPhases { get; }
-        IGenericRepository<Task> Tasks { get; }
+        IGenericRepository<backend.Entities.Task> Tasks { get; }
         IGenericRepository<TaskAssignment> TaskAssignments { get; }
         IGenericRepository<Supplier> Suppliers { get; }
         IGenericRepository<Material> Materials { get; }
@@ -19,9 +18,9 @@ namespace backend.Repositories
         IGenericRepository<Invoice> Invoices { get; }
         IGenericRepository<RefreshToken> RefreshTokens { get; }
 
-        Task<int> CompleteAsync();
-        Task BeginTransactionAsync();
-        Task CommitTransactionAsync();
-        Task RollbackTransactionAsync();
+        System.Threading.Tasks.Task<int> CompleteAsync();
+        System.Threading.Tasks.Task BeginTransactionAsync();
+        System.Threading.Tasks.Task CommitTransactionAsync();
+        System.Threading.Tasks.Task RollbackTransactionAsync();
     }
 }

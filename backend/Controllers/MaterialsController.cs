@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<MaterialDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.Materials.GetQueryable().Include(m => m.Supplier);
+            IQueryable<Material> queryable = _unitOfWork.Materials.GetQueryable().Include(m => m.Supplier);
 
             // Search
             if (!string.IsNullOrEmpty(query.Search))

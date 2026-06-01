@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<TaskAssignmentDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.TaskAssignments.GetQueryable()
+            IQueryable<TaskAssignment> queryable = _unitOfWork.TaskAssignments.GetQueryable()
                 .Include(ta => ta.Task)
                 .Include(ta => ta.Worker);
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { apiService } from '../services/api'
+import { apiService, USE_MOCK } from '../services/api'
 import { initLocalDatabase } from '../services/mockData'
 
 const AuthContext = createContext()
@@ -10,8 +10,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Initialize standard database state in browser
-    initLocalDatabase()
+    if (USE_MOCK) {
+      initLocalDatabase()
+    }
     
     const savedUser = localStorage.getItem('user')
     const savedToken = localStorage.getItem('token')
@@ -29,6 +30,8 @@ export const AuthProvider = ({ children }) => {
       
       setUser(loggedUser)
       setToken(accessToken)
+      localStorage.setItem('token', accessToken)
+      localStorage.setItem('user', JSON.stringify(loggedUser))
       
       return loggedUser
     } catch (error) {
@@ -44,6 +47,8 @@ export const AuthProvider = ({ children }) => {
       
       setUser(registeredUser)
       setToken(accessToken)
+      localStorage.setItem('token', accessToken)
+      localStorage.setItem('user', JSON.stringify(registeredUser))
       
       return registeredUser
     } catch (error) {

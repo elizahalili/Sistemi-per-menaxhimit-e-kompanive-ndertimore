@@ -1,12 +1,21 @@
 import axios from 'axios'
 import { mockApi } from './mockData'
 
-// === PRESENTATION MODE TOGGLE ===
-// Set to true to run directly in the browser via localStorage database (perfect for offline presentations!)
-// Set to false to connect directly to your C# ASP.NET Core API server!
-const USE_MOCK = true;
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5205/api'
 
-const API_BASE_URL = 'http://localhost:5000/api' // Default C# Web API Port
+const mapQueryParams = (params = {}, mappings = {}) => {
+  const normalizedParams = { ...params }
+
+  Object.entries(mappings).forEach(([fromKey, toKey]) => {
+    if (normalizedParams[fromKey] !== undefined && normalizedParams[fromKey] !== '') {
+      normalizedParams[toKey] = normalizedParams[fromKey]
+    }
+    delete normalizedParams[fromKey]
+  })
+
+  return normalizedParams
+}
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -81,7 +90,7 @@ export const apiService = {
   },
 
   clients: {
-    getAll: (params) => USE_MOCK ? mockApi.get('clients', params) : axiosInstance.get('/clients', { params }),
+    getAll: (params) => USE_MOCK ? mockApi.get('clients', params) : axiosInstance.get('/clients', { params: mapQueryParams(params, { lloji: 'status' }) }),
     getById: (id) => USE_MOCK ? mockApi.getById('clients', id) : axiosInstance.get(`/clients/${id}`),
     create: (data) => USE_MOCK ? mockApi.post('clients', data) : axiosInstance.post('/clients', data),
     update: (id, data) => USE_MOCK ? mockApi.put('clients', id, data) : axiosInstance.put(`/clients/${id}`, data),
@@ -137,7 +146,7 @@ export const apiService = {
   },
 
   materials: {
-    getAll: (params) => USE_MOCK ? mockApi.get('materials', params) : axiosInstance.get('/materials', { params }),
+    getAll: (params) => USE_MOCK ? mockApi.get('materials', params) : axiosInstance.get('/materials', { params: mapQueryParams(params, { kategoria: 'status' }) }),
     getById: (id) => USE_MOCK ? mockApi.getById('materials', id) : axiosInstance.get(`/materials/${id}`),
     create: (data) => USE_MOCK ? mockApi.post('materials', data) : axiosInstance.post('/materials', data),
     update: (id, data) => USE_MOCK ? mockApi.put('materials', id, data) : axiosInstance.put(`/materials/${id}`, data),

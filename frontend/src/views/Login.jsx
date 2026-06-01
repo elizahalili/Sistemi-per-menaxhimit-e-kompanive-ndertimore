@@ -123,9 +123,9 @@ const Login = () => {
         <div className="mt-6 p-4 rounded-2xl bg-slate-950/40 border border-slate-850 text-left">
           <span className="text-[9px] font-bold text-brand-400 uppercase tracking-widest block mb-2">Llogari për Demonstrim (Demo):</span>
           <div className="grid grid-cols-1 gap-1.5 text-[10px] text-slate-400 font-sans">
-            <div><span className="font-bold text-slate-300">Administrator:</span> admin@construction.com / Admin123!</div>
-            <div><span className="font-bold text-slate-300">Manager:</span> manager@construction.com / anypass</div>
-            <div><span className="font-bold text-slate-300">Worker:</span> worker@construction.com / anypass</div>
+            <div><span className="font-bold text-slate-300">Administrator:</span> admin@ndertimi.com / Admin123!</div>
+            <div><span className="font-bold text-slate-300">Manager:</span> manager@ndertimi.com / Manager123!</div>
+            <div><span className="font-bold text-slate-300">Worker:</span> worker@ndertimi.com / Worker123!</div>
           </div>
         </div>
 

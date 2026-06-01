@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using backend.Data;
 using backend.Entities;
@@ -14,7 +13,7 @@ namespace backend.Repositories
         public IGenericRepository<Project> Projects { get; }
         public IGenericRepository<Worker> Workers { get; }
         public IGenericRepository<ProjectPhase> ProjectPhases { get; }
-        public IGenericRepository<Task> Tasks { get; }
+        public IGenericRepository<backend.Entities.Task> Tasks { get; }
         public IGenericRepository<TaskAssignment> TaskAssignments { get; }
         public IGenericRepository<Supplier> Suppliers { get; }
         public IGenericRepository<Material> Materials { get; }
@@ -30,7 +29,7 @@ namespace backend.Repositories
             Projects = new GenericRepository<Project>(_context);
             Workers = new GenericRepository<Worker>(_context);
             ProjectPhases = new GenericRepository<ProjectPhase>(_context);
-            Tasks = new GenericRepository<Task>(_context);
+            Tasks = new GenericRepository<backend.Entities.Task>(_context);
             TaskAssignments = new GenericRepository<TaskAssignment>(_context);
             Suppliers = new GenericRepository<Supplier>(_context);
             Materials = new GenericRepository<Material>(_context);
@@ -40,17 +39,17 @@ namespace backend.Repositories
             RefreshTokens = new GenericRepository<RefreshToken>(_context);
         }
 
-        public async Task<int> CompleteAsync()
+        public async System.Threading.Tasks.Task<int> CompleteAsync()
         {
             return await _context.SaveChangesAsync();
         }
 
-        public async Task BeginTransactionAsync()
+        public async System.Threading.Tasks.Task BeginTransactionAsync()
         {
             _transaction = await _context.Database.BeginTransactionAsync();
         }
 
-        public async Task CommitTransactionAsync()
+        public async System.Threading.Tasks.Task CommitTransactionAsync()
         {
             if (_transaction != null)
             {
@@ -60,7 +59,7 @@ namespace backend.Repositories
             }
         }
 
-        public async Task RollbackTransactionAsync()
+        public async System.Threading.Tasks.Task RollbackTransactionAsync()
         {
             if (_transaction != null)
             {

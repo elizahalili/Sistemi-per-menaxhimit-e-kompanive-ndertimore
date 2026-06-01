@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<InvoiceDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.Invoices.GetQueryable()
+            IQueryable<Invoice> queryable = _unitOfWork.Invoices.GetQueryable()
                 .Include(i => i.Project)
                 .Include(i => i.Client);
 

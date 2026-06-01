@@ -32,7 +32,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<MaterialUsageDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.MaterialUsages.GetQueryable()
+            IQueryable<MaterialUsage> queryable = _unitOfWork.MaterialUsages.GetQueryable()
                 .Include(mu => mu.Project)
                 .Include(mu => mu.Material)
                 .Include(mu => mu.ProjectPhase);

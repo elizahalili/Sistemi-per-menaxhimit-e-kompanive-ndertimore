@@ -34,9 +34,9 @@ namespace backend.Controllers
             if (!string.IsNullOrEmpty(query.Search))
             {
                 var s = query.Search.ToLower();
-                queryable = queryable.Where(s => s.Emertimi.ToLower().Contains(s) || 
-                                                 s.Kontakti.ToLower().Contains(s) || 
-                                                 s.Specialiteti.ToLower().Contains(s));
+                queryable = queryable.Where(supplier => supplier.Emertimi.ToLower().Contains(s) || 
+                                                        supplier.Kontakti.ToLower().Contains(s) || 
+                                                        supplier.Specialiteti.ToLower().Contains(s));
             }
 
             // Sorting

@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<ProjectDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.Projects.GetQueryable().Include(p => p.Client);
+            IQueryable<Project> queryable = _unitOfWork.Projects.GetQueryable().Include(p => p.Client);
 
             // Search by Title/Location
             if (!string.IsNullOrEmpty(query.Search))

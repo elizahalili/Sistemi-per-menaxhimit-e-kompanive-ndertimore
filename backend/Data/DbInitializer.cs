@@ -3,12 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using backend.Entities;
+using Task = backend.Entities.Task;
 
 namespace backend.Data
 {
     public static class DbInitializer
     {
-        public static async Task SeedAsync(
+        public static async System.Threading.Tasks.Task SeedAsync(
             ApplicationDbContext context, 
             UserManager<ApplicationUser> userManager, 
             RoleManager<ApplicationRole> roleManager)

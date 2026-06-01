@@ -29,10 +29,10 @@ namespace backend.Configuration
             CreateMap<ProjectPhaseCreateUpdateDto, ProjectPhase>();
 
             // 5. Task Mappings
-            CreateMap<Task, TaskDto>()
+            CreateMap<backend.Entities.Task, TaskDto>()
                 .ForMember(dest => dest.PhaseName, opt => opt.MapFrom(src => 
                     src.ProjectPhase != null ? src.ProjectPhase.Emertimi : string.Empty));
-            CreateMap<TaskCreateUpdateDto, Task>();
+            CreateMap<TaskCreateUpdateDto, backend.Entities.Task>();
 
             // 6. TaskAssignment Mappings
             CreateMap<TaskAssignment, TaskAssignmentDto>()

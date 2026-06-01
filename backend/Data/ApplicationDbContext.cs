@@ -13,7 +13,7 @@ namespace backend.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<ProjectPhase> ProjectPhases { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<backend.Entities.Task> Tasks { get; set; }
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Material> Materials { get; set; }
@@ -109,7 +109,7 @@ namespace backend.Data
             });
 
             // 5. Tasks & TaskAssignments
-            builder.Entity<Task>(entity =>
+            builder.Entity<backend.Entities.Task>(entity =>
             {
                 entity.ToTable("Tasks");
                 entity.Property(t => t.Emertimi).HasMaxLength(150).IsRequired();

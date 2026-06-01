@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedResponseDto<ProjectPhaseDto>>> GetAll([FromQuery] QueryParameters query)
         {
-            var queryable = _unitOfWork.ProjectPhases.GetQueryable().Include(pp => pp.Project);
+            IQueryable<ProjectPhase> queryable = _unitOfWork.ProjectPhases.GetQueryable().Include(pp => pp.Project);
 
             // Filter by ProjektiId
             if (query.ProjektiId.HasValue)

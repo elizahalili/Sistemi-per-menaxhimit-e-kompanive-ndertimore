@@ -1,9 +1,0 @@
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.csproj.AssemblyReference.cache
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\rpswa.dswa.cache.json
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.AssemblyInfoInputs.cache
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.AssemblyInfo.cs
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.csproj.CoreCompileInputs.cache
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Eliza\OneDrive\Desktop\Lab 1\backend\obj\Debug\net10.0\backend.sourcelink.json

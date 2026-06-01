@@ -51,6 +51,11 @@ const Suppliers = () => {
     fetchSuppliers()
   }, [search, page])
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+    setPage(1)
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))

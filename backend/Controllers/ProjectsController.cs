@@ -35,7 +35,7 @@ namespace backend.Controllers
             {
                 var s = query.Search.ToLower();
                 queryable = queryable.Where(p => p.Emertimi.ToLower().Contains(s) || 
-                                                 p.Lokacioni.ToLower().Contains(s));
+                                                 (p.Lokacioni != null && p.Lokacioni.ToLower().Contains(s)));
             }
 
             // Filtering by Status

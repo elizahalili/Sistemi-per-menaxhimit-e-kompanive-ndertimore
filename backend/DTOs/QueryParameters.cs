@@ -7,6 +7,7 @@ namespace backend.DTOs
         public int? ProjektiId { get; set; }
         public int? KlientiId { get; set; }
         public int? FazaId { get; set; }
+        public bool? LowStock { get; set; }
         public string? SortBy { get; set; }
         public string SortOrder { get; set; } = "asc"; // "asc" or "desc"
         public int PageNumber { get; set; } = 1;

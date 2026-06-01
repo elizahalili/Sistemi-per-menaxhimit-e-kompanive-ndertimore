@@ -45,7 +45,7 @@ const Materials = () => {
       const response = await apiService.materials.getAll({
         search,
         kategoria,
-        lowStock: lowStock ? 'true' : '',
+        lowStock,
         sortBy,
         sortOrder,
         pageNumber: page,
@@ -374,7 +374,7 @@ const Materials = () => {
           <div className="grid grid-cols-2 gap-4">
             <Input
               label="Kategoria e Materialit"
-              name="kcategoria"
+              name="kategoria"
               type="select"
               value={form.kategoria}
               onChange={handleInputChange}

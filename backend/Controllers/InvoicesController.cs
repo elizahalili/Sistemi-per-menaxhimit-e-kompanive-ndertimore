@@ -36,7 +36,7 @@ namespace backend.Controllers
             if (!string.IsNullOrEmpty(query.Search))
             {
                 var s = query.Search.ToLower();
-                queryable = queryable.Where(i => i.Pershkrimi.ToLower().Contains(s) || 
+                queryable = queryable.Where(i => (i.Pershkrimi != null && i.Pershkrimi.ToLower().Contains(s)) || 
                                                  i.Project != null && i.Project.Emertimi.ToLower().Contains(s) || 
                                                  i.Client != null && i.Client.Emri.ToLower().Contains(s) || 
                                                  i.Client != null && i.Client.MbiemriKompania.ToLower().Contains(s));

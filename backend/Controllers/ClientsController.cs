@@ -36,8 +36,8 @@ namespace backend.Controllers
                 var s = query.Search.ToLower();
                 queryable = queryable.Where(c => c.Emri.ToLower().Contains(s) || 
                                                  c.MbiemriKompania.ToLower().Contains(s) || 
-                                                 c.Email.ToLower().Contains(s) || 
-                                                 c.Adresa.ToLower().Contains(s));
+                                                 (c.Email != null && c.Email.ToLower().Contains(s)) || 
+                                                 (c.Adresa != null && c.Adresa.ToLower().Contains(s)));
             }
 
             // Filtering by Type (custom field llojiKlientit)

@@ -1,6 +1,7 @@
 backend/bin/
 backend/obj/
 frontend/dist/
+frontend/node_modules/
 backend/backend-run.err.log
 backend/backend-run.out.log
 frontend/frontend-run.err.log
@@ -8,3 +9,8 @@ frontend/frontend-run.out.log
 backend/construction.db
 backend/construction.db-shm
 backend/construction.db-wal
+backend-build-verify/
+.local/
+.vs/
+*.user
+*.suo

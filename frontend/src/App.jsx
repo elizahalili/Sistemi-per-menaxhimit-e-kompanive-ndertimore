@@ -1,25 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import ProtectedRoute from './components/ProtectedRoute'
 
-// Lazy loaded views simulation for university performance benchmarks
-import Login from './views/Login'
-import Register from './views/Register'
-import Dashboard from './views/Dashboard'
-import Clients from './views/Clients'
-import Projects from './views/Projects'
-import Workers from './views/Workers'
-import Phases from './views/Phases'
-import Tasks from './views/Tasks'
-import TaskAssignments from './views/TaskAssignments'
-import Suppliers from './views/Suppliers'
-import Materials from './views/Materials'
-import MaterialUsages from './views/MaterialUsages'
-import Equipment from './views/Equipment'
-import Invoices from './views/Invoices'
+const Login = lazy(() => import('./views/Login'))
+const Register = lazy(() => import('./views/Register'))
+const Dashboard = lazy(() => import('./views/Dashboard'))
+const Clients = lazy(() => import('./views/Clients'))
+const Projects = lazy(() => import('./views/Projects'))
+const Workers = lazy(() => import('./views/Workers'))
+const Phases = lazy(() => import('./views/Phases'))
+const Tasks = lazy(() => import('./views/Tasks'))
+const TaskAssignments = lazy(() => import('./views/TaskAssignments'))
+const Suppliers = lazy(() => import('./views/Suppliers'))
+const Materials = lazy(() => import('./views/Materials'))
+const MaterialUsages = lazy(() => import('./views/MaterialUsages'))
+const Equipment = lazy(() => import('./views/Equipment'))
+const Invoices = lazy(() => import('./views/Invoices'))
+
+const ViewFallback = ({ fullScreen = false }) => (
+  <div className={`flex items-center justify-center ${fullScreen ? 'min-h-screen bg-slate-900' : 'min-h-[240px]'}`}>
+    <div className="flex items-center gap-3 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 bg-white/80 dark:bg-slate-900/80 px-5 py-4 shadow-sm">
+      <div className="h-3 w-3 rounded-full bg-brand-500 animate-pulse" />
+      <span className="text-sm font-semibold text-slate-600 dark:text-slate-300">Duke ngarkuar...</span>
+    </div>
+  </div>
+)
 
 const AppContent = () => {
   const { token } = useAuth()
@@ -73,8 +81,11 @@ const AppContent = () => {
   const isAuthPage = currentHash === '#/login' || currentHash === '#/register' || !token
 
   if (isAuthPage) {
-    if (currentHash === '#/register') return <Register />
-    return <Login />
+    return (
+      <Suspense fallback={<ViewFallback fullScreen />}>
+        {currentHash === '#/register' ? <Register /> : <Login />}
+      </Suspense>
+    )
   }
 
   return (
@@ -98,7 +109,9 @@ const AppContent = () => {
         {/* Dynamic Inner Dashboard Page Wrapper */}
         <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-[1600px] w-full mx-auto">
           <div className="animate-fade-in">
-            {renderView()}
+            <Suspense fallback={<ViewFallback />}>
+              {renderView()}
+            </Suspense>
           </div>
         </main>
       </div>

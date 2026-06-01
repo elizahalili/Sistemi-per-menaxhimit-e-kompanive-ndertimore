@@ -35,13 +35,18 @@ namespace backend.Controllers
             {
                 var s = query.Search.ToLower();
                 queryable = queryable.Where(m => m.Emertimi.ToLower().Contains(s) || 
-                                                 m.Kategoria.ToLower().Contains(s));
+                                                 (m.Kategoria != null && m.Kategoria.ToLower().Contains(s)));
             }
 
             // Filtering by Category/Status
             if (!string.IsNullOrEmpty(query.Status)) // using status parameter as general Category filter if needed
             {
                 queryable = queryable.Where(m => m.Kategoria == query.Status);
+            }
+
+            if (query.LowStock == true)
+            {
+                queryable = queryable.Where(m => m.SasiaStokut <= 20);
             }
 
             // Sorting
@@ -52,6 +57,8 @@ namespace backend.Controllers
                     queryable = isDesc ? queryable.OrderByDescending(m => m.Emertimi) : queryable.OrderBy(m => m.Emertimi);
                 else if (query.SortBy.ToLower() == "sasiastokut")
                     queryable = isDesc ? queryable.OrderByDescending(m => m.SasiaStokut) : queryable.OrderBy(m => m.SasiaStokut);
+                else if (query.SortBy.ToLower() == "cmiminjesi")
+                    queryable = isDesc ? queryable.OrderByDescending(m => m.CmimiNjesi) : queryable.OrderBy(m => m.CmimiNjesi);
             }
             else
             {

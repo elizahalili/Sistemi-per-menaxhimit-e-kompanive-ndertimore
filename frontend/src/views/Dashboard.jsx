@@ -101,7 +101,7 @@ const Dashboard = () => {
       {/* Welcome banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 bg-gradient-to-r from-brand-600 to-indigo-600 dark:from-brand-950/40 dark:to-indigo-950/20 border border-brand-500/10 dark:border-slate-800 rounded-3xl text-white shadow-lg shadow-brand-500/5">
         <div>
-          <h3 className="text-xl font-bold font-sans">Welcome to Hekur & Dekor 👋</h3>
+          <h3 className="text-xl font-bold font-sans">Welcome to EHD Construction System</h3>
           <p className="text-slate-100 dark:text-slate-400 text-xs mt-1 max-w-lg">
             Këtu mund të gjeni ecurinë e punimeve, disponueshmërinë e stokut dhe statistikat financiare të kompanisë në kohë reale.
           </p>

@@ -57,7 +57,7 @@ const Login = () => {
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-brand-500/20 mb-3">
             HD
           </div>
-          <h2 className="text-2xl font-extrabold text-white tracking-wide">HEKUR & DEKO</h2>
+          <h2 className="text-2xl font-extrabold text-white tracking-wide">EHD Construction System</h2>
           <p className="text-xs font-bold text-brand-400 uppercase tracking-widest leading-none mt-1">Sistemi për Menaxhim Ndërtimi</p>
         </div>
 

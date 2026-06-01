@@ -60,7 +60,7 @@ const Register = () => {
             HD
           </div>
           <h2 className="text-xl font-extrabold text-white tracking-wide">Krijo një Llogari</h2>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1">Regjistrimi i stafit / Hekur & Deko</p>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1">Regjistrimi i stafit / EHD Construction System</p>
         </div>
 
         {serverError && (

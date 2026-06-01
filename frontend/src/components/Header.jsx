@@ -42,7 +42,7 @@ const Header = ({ currentHash, onMenuOpen }) => {
             {getPageTitle()}
           </h2>
           <p className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold tracking-wider uppercase mt-1 hidden sm:block">
-            Paneli Administrativ / Hekur & Deko
+            Paneli Administrativ / EHD Construction
           </p>
         </div>
       </div>

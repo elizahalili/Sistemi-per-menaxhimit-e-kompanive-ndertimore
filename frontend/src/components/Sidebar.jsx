@@ -46,7 +46,7 @@ const Sidebar = ({ currentHash, isOpen, onClose }) => {
               HD
             </div>
             <div>
-              <h1 className="font-extrabold text-slate-850 dark:text-white tracking-wide text-base font-sans">HEKUR & DEKO</h1>
+              <h1 className="font-extrabold text-slate-850 dark:text-white tracking-wide text-base font-sans">EHD Construction</h1>
               <p className="text-[10px] font-bold text-brand-500 dark:text-brand-400 uppercase tracking-widest leading-none mt-0.5">Sistem Menaxhimi</p>
             </div>
           </div>
